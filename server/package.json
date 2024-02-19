@@ -14,7 +14,9 @@
     "express": "^4.15.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.5",
-    "sequelize": "^6.35.1"
+    "sequelize": "^6.35.1",
+    "stream-http": "^3.2.0",
+    "url-polyfill": "^1.1.12"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

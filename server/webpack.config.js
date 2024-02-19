@@ -8,6 +8,15 @@ module.exports = {
     filename: "bundle.js",
     path: DIST_DIR,
   },
+  resolve: {
+    fallback: {
+      url: require.resolve("url"),
+    },
+    alias: {
+      'url': 'url-polyfill',
+    },
+  },
+ 
   module: {
     rules: [
       {

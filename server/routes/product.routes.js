@@ -1,14 +1,14 @@
-const productRouter = require('express').Router();
-const {AllProduct,GetProduct,GetSellerProd,AddProduct,UpdateProduct,DeleteProduct} = require('../controllers/product.controllers');
+const allcarsRouter = require('express').Router();
+const {Allallcars,Getallcars,GetSellerProd,Addallcars,Updateallcars,Deleteallcars} = require('../controllers/product.controllers');
 
 
 
-productRouter.get('/products',AllProduct)
-productRouter.get('/products/:id',GetProduct)
-productRouter.get('/seller/products/:id',GetSellerProd)
-productRouter.post('/product',AddProduct)
-productRouter.put('/product/:id',UpdateProduct)
-productRouter.delete('/product/:id',DeleteProduct)
+allcarsRouter.get('/allcarss',Allallcars)
+allcarsRouter.get('/allcarss/:id',Getallcars)
+allcarsRouter.get('/seller/allcarss/:id',GetSellerProd)
+allcarsRouter.post('/allcars',Addallcars)
+allcarsRouter.put('/allcars/:id',Updateallcars)
+allcarsRouter.delete('/allcars/:id',Deleteallcars)
 
 
-module.exports=productRouter;
+module.exports=allcarsRouter;

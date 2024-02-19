@@ -21,8 +21,8 @@ const Users =(connection,DataTypes)=>{
     allowNull: false,
   },
   age: {
-    type: DataTypes.NUMBER,
-    allowNull: false,
+    type: DataTypes.INTEGER,
+    // allowNull: false,
   },
   adress: {
    type: DataTypes.STRING,

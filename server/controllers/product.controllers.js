@@ -1,19 +1,17 @@
-const {Product, Categories}=require('../database-Sequelize/index')
+const {allcars, Categories}=require('../database-Sequelize/index')
 
-const AllProduct = async(req,res) => {
+const Allallcars = async(req,res) => {
     try {
-    const result=await Product.findAll({
-        include:{model:Categories},
-    });
+    const result=await allcars.findAll();
     res.json(result)   
     } catch (error) {
     res.send(error)    
     }
 };
 
-const GetProduct=async(req,res) => {
+const Getallcars=async(req,res) => {
     try {
-    const result=await Product.findOne({where:{id:req.params.id}})
+    const result=await allcars.findOne({where:{id:req.params.id}})
     res.json(result) 
     } catch (error) {
         res.send(error)
@@ -22,7 +20,7 @@ const GetProduct=async(req,res) => {
 
 const GetSellerProd=async(req,res) => {
     try {
-    const result=await Product.findAll({where:{seller_id:req.params.id}},{
+    const result=await allcars.findAll({where:{seller_id:req.params.id}},{
         include:{model:Categories}
     });
     res.json(result) 
@@ -31,31 +29,31 @@ const GetSellerProd=async(req,res) => {
     }
 }
 
-const AddProduct = async(req,res) => {
+const Addallcars = async(req,res) => {
     try {
-    const result=await Product.create(req.body)
+    const result=await allcars.create(req.body)
     res.json(result)   
     } catch (error) {
     res.send(error)    
     }
 };
 
-const UpdateProduct = async(req,res) => {
+const Updateallcars = async(req,res) => {
     try {
-    const result=await Product.update(req.body,{where:req.params})
+    const result=await allcars.update(req.body,{where:req.params})
     res.json(result)   
     } catch (error) {
     res.send(error)    
     }
 };
 
-const DeleteProduct= async(req,res) => {
+const Deleteallcars= async(req,res) => {
     try {
-    const result=await Product.destroy({where:req.params})
+    const result=await allcars.destroy({where:req.params})
     res.json(result)   
     } catch (error) {
     res.send(error)    
     }
 };
 
-module.exports={AllProduct,GetProduct,GetSellerProd,AddProduct,UpdateProduct,DeleteProduct}
+module.exports={Allallcars,Getallcars,GetSellerProd,Addallcars,Updateallcars,Deleteallcars}
