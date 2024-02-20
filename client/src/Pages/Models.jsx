@@ -33,9 +33,10 @@ function Models() {
 
        
           <div className="models-div">
+          {(postData.map((data) =>(
             <div className="models-div__box">
 
-            {(postData.map((data) =>(
+           
               <div className="models-div__box__img">
                 <img src={data.image} alt="car_img" />
                 <div className="models-div__box__descr">
@@ -76,9 +77,9 @@ function Models() {
                   </div>
                 </div>
               </div>
-              )))}
+             
             </div>
-            
+             )))}
           </div>
         </div>
         <div className="book-banner">
