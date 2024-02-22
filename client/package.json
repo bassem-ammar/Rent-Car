@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.7",
+    "mdb-react-ui-kit": "^7.2.0",
     "picomatch": "^2.3.1",
     "react": "^18.2.0",
     "react-datepicker": "^4.10.0",
@@ -14,6 +16,7 @@
     "react-router-dom": "^6.8.0",
     "react-scripts": "5.0.1",
     "stream-http": "^3.2.0",
+    "tw-elements-react": "^1.0.0-alpha2",
     "url-polyfill": "^1.1.12",
     "web-vitals": "^2.1.4"
   },

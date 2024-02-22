@@ -7,7 +7,6 @@ import Models from "./Pages/Models";
 import TestimonialsPage from "./Pages/TestimonialsPage";
 import Team from "./Pages/Team";
 import Contact from "./Pages/Contact";
-
 function App() {
   return (
     <>
