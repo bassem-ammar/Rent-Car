@@ -93,14 +93,13 @@ function BookCar() {
     event.preventDefault();
   
     const formData = {
-      // carType: carType, // Ensure this matches the field name expected by the backend
       pickTime: pickTime,
       dropTime: dropTime,
-      first_name: name, // Match frontend input fields to backend fields
+      first_name: name,
       last_name: lastName,
       phoneNumber: phone,
       email: email,
-      adress: address, // Correct the spelling to address
+      adress: address, 
       city: city,
       userId:1,
       allcarId:1
@@ -110,7 +109,6 @@ function BookCar() {
       .post("http://localhost:3000/api/BuyMeAll/orders", formData)
       .then((response) => {
         console.log("Order placed successfully:", response.data);
-        // Reset form fields after successful submission
         setName("");
         setLastName("");
         setPhone("");

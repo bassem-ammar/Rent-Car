@@ -12,14 +12,14 @@ const AllUsers= async(req,res) => {
 
 const generateToken = (userId, userName) => {
     const expiresIn = 60 * 60 * 24;
-    return jwt.sign({ userId, userName }, 'secretKey', { expiresIn: expiresIn });
+    return jwt.sign({ id, first_name }, 'secretKey', { expiresIn: expiresIn });
   };
 
 
 const AddUser= async(req,res) => {
     try {
     const result=await Users.create(req.body)
-    const tok=generateToken(result.dataValues.id,result.dataValues.user_name)  
+    const tok=generateToken(result.dataValues.id,result.dataValues.first_name)  
     result.dataValues.tok=tok
     res.send(result.dataValues)
     } catch (error) {

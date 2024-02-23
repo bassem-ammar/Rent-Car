@@ -19,24 +19,7 @@ const Users =(connection,DataTypes)=>{
    user_img: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  age: {
-    type: DataTypes.INTEGER,
-    // allowNull: false,
-  },
-  adress: {
-   type: DataTypes.STRING,
-   allowNull: false,
- },
- 
-   city: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  zip_code: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+  }
  })
 };
 
