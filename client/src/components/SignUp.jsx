@@ -1,17 +1,46 @@
 import React, { useState } from "react";
 import { TEInput, TERipple } from "tw-elements-react";
 import "./SignUp.css"; // Import CSS for component styling
-
+import {Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 export default function SignUp() {
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const handleSubmit = async (event) => {
+    const navigate = useNavigate();
+    try {
+      const response = await axios.post('http://localhost:3000/api/BuyMeAll/signup', {
+        first_name:firstName,
+        last_name:lastName,
+        user_password:password,
+        user_phOrEmail:email
+      });
+      console.log(response);
+      const { user_phOrEmail, first_name, tok} = response.data;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can add form validation and submission logic here
+      if (user_phOrEmail && first_name && tok) {
+        Cookies.set('authToken', tok, { expires: 7 }); 
+        setUser(response.data);
+        
+        setSuccessMessage('Registration successful');
+        setErrorMessage('');
+        alert("Sign up successful!");
+        navigate(`/`)
+      } else {
+        setSuccessMessage('');
+        setErrorMessage('!Registration failed. Please try again.');
+      }
+    } catch (error) {
+      setSuccessMessage('');
+      setErrorMessage('Error during registration. Please try again.');
+      console.error('Error during registration:', error);
+    }
   };
+  
 
   return (
     <section className="container-section">
@@ -28,13 +57,20 @@ export default function SignUp() {
             </div>
 
             <form className="form-container" onSubmit={handleSubmit}>
-              <p className="form-heading">Create your account</p>
+             
               <TEInput
                 type="text"
-                label="Full Name"
+                label="First Name"
                 className="input-field"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              <TEInput
+                type="text"
+                label="Last Name"
+                className="input-field"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
               <TEInput
                 type="email"
@@ -43,21 +79,13 @@ export default function SignUp() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <TEInput
-                type="password"
-                label="Password"
-                className="input-field"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <TEInput
-                type="password"
-                label="Confirm Password"
-                className="input-field"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-
+                <TEInput
+                  type="password"
+                  label="Password"
+                  className="input-field"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               <div className="button-container">
                 <TERipple rippleColor="light">
                   <button type="submit" className="signup-button">

@@ -1,8 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { TEInput, TERipple } from "tw-elements-react";
-import "./Login.css"; // Import CSS for component styling
+import "./Login.css";
+import Cookies from 'js-cookie';
+// import { useIdentity } from "react-use-identity";
+ function Login() {
+  const [userpassword, setUserpassword] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  // const { setUser } = useIdentity();
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-export default function Login(){
+    try {
+      const response = await axios.post("http://localhost:3000/api/BuyMeAll/signin", {
+        user_phOrEmail: userEmail,
+        user_password: userpassword,
+      });
+
+      const { tok, id } = response.data;
+
+      if (id && tok) {
+        const { tok } = response.data;
+        Cookies.set("id",response.data.id);
+        Cookies.set("authToken", tok, { expires: 60 * 60 * 24 });
+        // setUser(response.data);
+        setErrorMessage("");
+        setSuccessMessage("signup successful");
+      console.log("succes")
+      navigate(`/`)
+      } else {
+        setErrorMessage("Login failed. Please check your credentials.");
+      }
+    } catch (error) {
+      setErrorMessage("Error during login. Please try again.");
+      console.error("Error during login:", error);
+    }
+  };
+
   return (
     <section className="container-section">
       <div className="container">
@@ -17,16 +55,28 @@ export default function Login(){
               <h4 className="sub-heading">We are The Lotus Team</h4>
             </div>
 
-            <form className="form-container">
+            <form className="form-container" onSubmit={handleSubmit}>
               <p className="form-heading">Please login to your account</p>
-              <TEInput type="text" label="Username" className="input-field" />
-              <TEInput type="password" label="Password" className="input-field" />
+              <TEInput
+                type="text"
+                label="Username"
+                className="input-field"
+                onChange={(e) => setUserEmail(e.target.value)}
+              />
+              <TEInput
+                type="password"
+                label="Password"
+                className="input-field"
+                onChange={(e) => setUserpassword(e.target.value)}
+              />
 
               <div className="button-container">
                 <TERipple rippleColor="light">
                   <button className="login-button">Log in</button>
                 </TERipple>
-                <a href="#!" className="forgot-password">Forgot password?</a>
+                <a href="#!" className="forgot-password">
+                  Forgot password?
+                </a>
               </div>
             </form>
           </div>
@@ -46,3 +96,4 @@ export default function Login(){
     </section>
   );
 }
+export default Login

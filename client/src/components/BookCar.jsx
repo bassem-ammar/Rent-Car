@@ -13,7 +13,7 @@ function BookCar() {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [postData, setPostData] = useState([]);
- 
+  const [imgUrl, setCarImg] = useState([]);
   useEffect(() => {
     if (modal === true) {
       document.body.style.overflow = "hidden";
@@ -58,7 +58,7 @@ function BookCar() {
   // taking value of booking inputs
   const handleCar = (e) => {
     setCarType(e.target.value);
-    setCarImg(e.target.value);
+    setCarImg(e.target.value.image);
   };
 
   // const handlePick = (e) => {
@@ -224,7 +224,7 @@ function BookCar() {
         {/* car info */}
         <div className="booking-modal__car-info">
           <div className="dates-div">
-            <div className="booking-modal__car-info__dates">
+            {/* <div className="booking-modal__car-info__dates">
               <h5>Location & Date</h5>
               <span>
                 <i className="fa-solid fa-location-dot"></i>
@@ -236,9 +236,9 @@ function BookCar() {
                   </p>
                 </div>
               </span>
-            </div>
+            </div> */}
 
-            <div className="booking-modal__car-info__dates">
+            {/* <div className="booking-modal__car-info__dates">
               <span>
                 <i className="fa-solid fa-location-dot"></i>
                 <div>
@@ -249,14 +249,14 @@ function BookCar() {
                   </p>
                 </div>
               </span>
-            </div>
+            </div> */}
 
           </div>
           <div className="booking-modal__car-info__model">
             <h5>
               <span>Car -</span> {carType}
             </h5>
-            {/* {imgUrl && <img src={imgUrl} alt="car_img" />} */}
+            {imgUrl && <img src={imgUrl} alt="car_img" />}
           </div>
         </div>
         
