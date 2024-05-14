@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { TEInput, TERipple } from "tw-elements-react";
-import "./SignUp.css"; // Import CSS for component styling
-import {Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie'; // Import Cookies to handle setting the authentication token
+
 export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -10,29 +11,32 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
   const handleSubmit = async (event) => {
-    const navigate = useNavigate();
+    event.preventDefault(); // Prevent default form submission behavior
     try {
       const response = await axios.post('http://localhost:3000/api/BuyMeAll/signup', {
-        first_name:firstName,
-        last_name:lastName,
-        user_password:password,
-        user_phOrEmail:email
+        first_name: firstName,
+        last_name: lastName,
+        user_password: password,
+        user_phOrEmail: email
       });
       console.log(response);
-      const { user_phOrEmail, first_name, tok} = response.data;
+      const { user_phOrEmail, first_name, tok } = response.data;
 
       if (user_phOrEmail && first_name && tok) {
         Cookies.set('authToken', tok, { expires: 7 }); 
-        setUser(response.data);
+        // Assuming you have a function or state handling for setUser
+        // setUser(response.data);
         
         setSuccessMessage('Registration successful');
         setErrorMessage('');
         alert("Sign up successful!");
-        navigate(`/`)
+        // Assuming you have imported useNavigate from 'react-router-dom'
+        // navigate(`/`)
       } else {
         setSuccessMessage('');
-        setErrorMessage('!Registration failed. Please try again.');
+        setErrorMessage('Registration failed. Please try again.');
       }
     } catch (error) {
       setSuccessMessage('');
@@ -40,7 +44,6 @@ export default function SignUp() {
       console.error('Error during registration:', error);
     }
   };
-  
 
   return (
     <section className="container-section">
@@ -57,7 +60,6 @@ export default function SignUp() {
             </div>
 
             <form className="form-container" onSubmit={handleSubmit}>
-             
               <TEInput
                 type="text"
                 label="First Name"
@@ -79,13 +81,13 @@ export default function SignUp() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-                <TEInput
-                  type="password"
-                  label="Password"
-                  className="input-field"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+              <TEInput
+                type="password"
+                label="Password"
+                className="input-field"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
               <div className="button-container">
                 <TERipple rippleColor="light">
                   <button type="submit" className="signup-button">

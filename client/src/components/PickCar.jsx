@@ -1,13 +1,31 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import CarBox from "./CarBox";
-import { CAR_DATA } from "./CarData";
 
 function PickCar() {
-  const [active, setActive] = useState("SecondCar");
-  const [colorBtn, setColorBtn] = useState("btn1");
+  const [active, setActive] = useState(null);
+  const [colorBtn, setColorBtn] = useState("");
+  const [postData, setPostData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/BuyMeAll/allcarss")
+      .then((response) => {
+        setPostData(response.data);
+        // Set the first car as active by default
+        if(response.data.length > 0) {
+          setActive(response.data[0].id);
+          setColorBtn(response.data[0].id);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
   const btnID = (id) => {
-    setColorBtn(colorBtn === id ? "" : id);
+    setActive(id);
+    setColorBtn(id);
   };
 
   const coloringButton = (id) => {
@@ -15,93 +33,39 @@ function PickCar() {
   };
 
   return (
-    <>
-      <section className="pick-section">
-        <div className="container">
-          <div className="pick-container">
-            <div className="pick-container__title">
-              <h3>Vehicle Models</h3>
-              <h2>Our rental fleet</h2>
-              <p>
-                Choose from a variety of our amazing vehicles to rent for your
-                next adventure or business trip
-              </p>
+    <section className="pick-section">
+      <div className="container">
+        <div className="pick-container">
+          <div className="pick-container__title">
+            <h3>Vehicle Models</h3>
+            <h2>Our rental fleet</h2>
+            <p>
+              Choose from a variety of our amazing vehicles to rent for your
+              next adventure or business trip
+            </p>
+          </div>
+          <div className="pick-container__car-content">
+            {/* pick car */}
+            <div className="pick-box">
+              {postData.map((data, index) => (
+                <button
+                  key={index}
+                  className={`${coloringButton(data.id)}`}
+                  onClick={() => btnID(data.id)}
+                >
+                  {data.Model}
+                </button>
+              ))}
             </div>
-            <div className="pick-container__car-content">
-              {/* pick car */}
-              <div className="pick-box">
-                <button
-                  className={`${coloringButton("btn1")}`}
-                  onClick={() => {
-                    setActive("SecondCar");
-                    btnID("btn1");
-                  }}
-                >
-                  Audi A1 S-Line
-                </button>
-                <button
-                  className={`${coloringButton("btn2")}`}
-                  id="btn2"
-                  onClick={() => {
-                    setActive("FirstCar");
-                    btnID("btn2");
-                  }}
-                >
-                  VW Golf 6
-                </button>
-                <button
-                  className={`${coloringButton("btn3")}`}
-                  id="btn3"
-                  onClick={() => {
-                    setActive("ThirdCar");
-                    btnID("btn3");
-                  }}
-                >
-                  Toyota Camry
-                </button>
-                <button
-                  className={`${coloringButton("btn4")}`}
-                  id="btn4"
-                  onClick={() => {
-                    setActive("FourthCar");
-                    btnID("btn4");
-                  }}
-                >
-                  BMW 320 ModernLine
-                </button>
-                <button
-                  className={`${coloringButton("btn5")}`}
-                  id="btn5"
-                  onClick={() => {
-                    setActive("FifthCar");
-                    btnID("btn5");
-                  }}
-                >
-                  Mercedes-Benz GLK
-                </button>
-                <button
-                  className={`${coloringButton("btn6")}`}
-                  id="btn6"
-                  onClick={() => {
-                    setActive("SixthCar");
-                    btnID("btn6");
-                  }}
-                >
-                  VW Passat CC
-                </button>
-              </div>
 
-              {active === "FirstCar" && <CarBox data={CAR_DATA} carID={0} />}
-              {active === "SecondCar" && <CarBox data={CAR_DATA} carID={1} />}
-              {active === "ThirdCar" && <CarBox data={CAR_DATA} carID={2} />}
-              {active === "FourthCar" && <CarBox data={CAR_DATA} carID={3} />}
-              {active === "FifthCar" && <CarBox data={CAR_DATA} carID={4} />}
-              {active === "SixthCar" && <CarBox data={CAR_DATA} carID={5} />}
-            </div>
+            {postData.map((data) => (
+              active === data.id && <CarBox key={data.id} data={data} />
+            ))}
+
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 

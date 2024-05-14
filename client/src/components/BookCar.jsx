@@ -13,7 +13,7 @@ function BookCar() {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [postData, setPostData] = useState([]);
-  const [imgUrl, setCarImg] = useState([]);
+  const [image, setCarImg] = useState([]);
   useEffect(() => {
     if (modal === true) {
       document.body.style.overflow = "hidden";
@@ -57,8 +57,9 @@ function BookCar() {
   
   // taking value of booking inputs
   const handleCar = (e) => {
-    setCarType(e.target.value);
-    setCarImg(e.target.value.image);
+    const selectedCar = postData.find((car) => car.Model === e.target.value);
+    setCarType(selectedCar.Model);
+    setCarImg(selectedCar.image);
   };
 
   // const handlePick = (e) => {
@@ -99,7 +100,7 @@ function BookCar() {
       last_name: lastName,
       phoneNumber: phone,
       email: email,
-      adress: address, 
+      address: address, 
       city: city,
       userId:1,
       allcarId:1
@@ -116,7 +117,6 @@ function BookCar() {
         setEmail("");
         setAddress("");
         setCity("");
-        // setCarType("");
         setPickTime("");
         setDropTime("");
       })
@@ -124,7 +124,6 @@ function BookCar() {
         console.error("Error placing order:", error);
       });
   };
-  // hide message
   const hideMessage = () => {
     const doneMsg = document.querySelector(".booking-done");
     doneMsg.style.display = "none";
@@ -205,58 +204,32 @@ function BookCar() {
       {/* modal ------------------------------------ */}
 
       <div className={`booking-modal ${modal ? "active-modal" : ""}`}>
-        {/* title */}
-        <div className="booking-modal__title">
-          <h2>Complete Reservation</h2>
-          <i onClick={openModal} className="fa-solid fa-xmark"></i>
-        </div>
-        {/* message */}
-        <div className="booking-modal__message">
-          <h4>
-            <i className="fa-solid fa-circle-info"></i> Upon completing this
-            reservation enquiry, you will receive:
-          </h4>
-          <p>
-            Your rental voucher to produce on arrival at the rental desk and a
-            toll-free customer support number.
-          </p>
-        </div>
+  {/* title */}
+  <div className="booking-modal__title">
+    <h2>Complete Reservation</h2>
+    <i onClick={openModal} className="fa-solid fa-xmark"></i>
+  </div>
+  {/* message */}
+  <div className="booking-modal__message">
+    <h4>
+      <i className="fa-solid fa-circle-info"></i> Upon completing this
+      reservation enquiry, you will receive:
+    </h4>
+    <p>
+      Your rental voucher to produce on arrival at the rental desk and a
+      toll-free customer support number.
+    </p>
+  </div>
         {/* car info */}
         <div className="booking-modal__car-info">
           <div className="dates-div">
-            {/* <div className="booking-modal__car-info__dates">
-              <h5>Location & Date</h5>
-              <span>
-                <i className="fa-solid fa-location-dot"></i>
-                <div>
-                  <h6>Pick-Up Date & Time</h6>
-                  <p>
-                    {pickTime} /{" "}
-                    <input type="time" className="input-time"></input>
-                  </p>
-                </div>
-              </span>
-            </div> */}
-
-            {/* <div className="booking-modal__car-info__dates">
-              <span>
-                <i className="fa-solid fa-location-dot"></i>
-                <div>
-                  <h6>Drop-Off Date & Time</h6>
-                  <p>
-                    {dropTime} /{" "}
-                    <input type="time" className="input-time"></input>
-                  </p>
-                </div>
-              </span>
-            </div> */}
-
+           
           </div>
           <div className="booking-modal__car-info__model">
             <h5>
               <span>Car -</span> {carType}
             </h5>
-            {imgUrl && <img src={imgUrl} alt="car_img" />}
+            {image && <img src={image} alt="car_img" />}
           </div>
         </div>
         
@@ -370,6 +343,7 @@ function BookCar() {
             <div className="reserve-button">
         <button onClick={confirmBooking}>Reserve Now</button>
       </div>
+      <button onClick={closeModal}>Close</button>
           </form>
         </div>
       </div>
