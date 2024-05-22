@@ -6,10 +6,11 @@ const productRouter =require('./routes/product.routes')
 // const categoryRoute =require('./routes/category.route')
 const authController =require('./controllers/auth.controller')
 const cors = require('cors')
+const bcrypt = require('bcryptjs');
 
 const db = require('./database-Sequelize');
 const app = express();
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5000
 
 
 app.use(express.json());
@@ -17,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/../client/dist"));
 app.use(cors())
 
-app.post('/api/BuyMeAll/signup',authController.signUp)
+app.use('/api/BuyMeAll',usersRoute)
 app.post('/api/BuyMeAll/signin',authController.signIn)
 app.use("/api/BuyMeAll",usersRoute)
 app.use("/api/BuyMeAll",ordersRouter)
@@ -29,5 +30,5 @@ app.use("/api/BuyMeAll",productRouter)
 
 
 app.listen(PORT, function () {
-  console.log("listening on port 3000!");
+  console.log("listening on port 5000!");
 });

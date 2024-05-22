@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const { users } = require('../database-Sequelize/index');
 const { AddUser } = require('./users.controller');
-
+const bcrypt = require('bcryptjs');
 const generateToken = (userId, userName) => {
   const expiresIn = 60 * 60 * 24;
   return jwt.sign({ userId, userName }, 'secretKey', { expiresIn: expiresIn });

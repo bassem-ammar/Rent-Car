@@ -1,18 +1,20 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const config = require('../config/config.js')
+const config = require('../config/config');
 
-const connection = new Sequelize(config.database,config.user,config.password,{
-    host: "127.0.0.1",
-    dialect: "mysql",
-    logging:false
-  }
-)
-const car_rent={}
-car_rent.connection=connection
-car_rent.Sequelize=Sequelize
-car_rent.users = require ('./users.js')(connection,DataTypes)
-car_rent.allcars = require ('./allcars.js')(connection,DataTypes)
-car_rent.orders = connection.define('orders', { 
+const connection = new Sequelize(config.database, config.user, config.password, {
+  host: config.host,
+  dialect: "mysql",
+  port: config.port,
+  logging: false
+});
+
+const car_rent = {};
+car_rent.connection = connection;
+car_rent.Sequelize = Sequelize;
+car_rent.users = require('./users')(connection, DataTypes);
+car_rent.allcars = require('./allcars')(connection, DataTypes);
+
+car_rent.orders = connection.define('orders', {
   send: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -42,7 +44,7 @@ car_rent.orders = connection.define('orders', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  address: {  
+  address: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -52,18 +54,20 @@ car_rent.orders = connection.define('orders', {
   },
 });
 
-
-
-
-car_rent.Favorite= connection.define('favorite',{},{timestamps:false})
+car_rent.Favorite = connection.define('favorite', {}, { timestamps: false });
 car_rent.orders.belongsTo(car_rent.users);
-car_rent.connection.authenticate()
-car_rent.connection.sync({ force: true })
-  .then(() => {
-    console.log("tables created successfully!");
-  })
-  .catch((error) => {
-    console.error("Unable to create table : ", error);
-  });
 
-module.exports=car_rent
+async function initializeDatabase() {
+  try {
+    await connection.authenticate();
+    console.log('Database connection has been established successfully.');
+    await connection.sync({ force: false, alter: true });
+    console.log('Tables created successfully!');
+  } catch (error) {
+    console.error('Unable to create table:', error);
+  }
+}
+
+initializeDatabase();
+
+module.exports = car_rent;

@@ -24,7 +24,7 @@ function BookCar() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/BuyMeAll/allcarss")
+      .get("http://localhost:5000/api/BuyMeAll/allcarss")
       .then((response) => {
         setPostData(response.data);
       })
@@ -107,7 +107,7 @@ function BookCar() {
     };
   
     axios
-      .post("http://localhost:3000/api/BuyMeAll/orders", formData)
+      .post("http://localhost:5000/api/BuyMeAll/orders", formData)
       .then((response) => {
         console.log("Order placed successfully:", response.data);
         setName("");

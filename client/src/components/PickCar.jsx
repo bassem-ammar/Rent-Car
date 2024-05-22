@@ -9,7 +9,7 @@ function PickCar() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/BuyMeAll/allcarss")
+      .get("http://localhost:5000/api/BuyMeAll/allcarss")
       .then((response) => {
         setPostData(response.data);
         // Set the first car as active by default

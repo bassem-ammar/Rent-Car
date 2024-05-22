@@ -1,86 +1,111 @@
+/* Improved CSS for SignUp Component */
 .container-section {
-    background-color: #f3f4f6;
-    padding: 50px 0;
-  }
-  
-  .container {
-    display: flex;
-    justify-content: center;
-  }
-  
+  background-color: #f9fafb;
+  padding: 60px 0;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.left-column,
+.right-column {
+  flex: 1;
+  padding: 40px;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo {
+  width: 120px;
+}
+
+.sub-heading {
+  font-size: 1.4rem;
+  color: #333333;
+  margin-top: 10px;
+}
+
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-heading {
+  font-size: 1.5rem;
+  color: #333333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.input-field {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.button-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.signup-button {
+  background: linear-gradient(to right, #4caf50, #388e3c);
+  color: #fff;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.signup-button:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background: linear-gradient(to right, #4caf50, #388e3c);
+  color: #fff;
+}
+
+.main-heading {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
   .content {
-    display: flex;
-    width: 100%;
-    max-width: 1200px;
+    flex-direction: row;
   }
-  
-  .left-column {
-    flex: 1;
-  }
-  
+
   .logo-container {
-    text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
-  
-  .logo {
-    width: 150px;
-  }
-  
-  .sub-heading {
-    font-size: 1.2rem;
-    margin-top: 5px;
-  }
-  
-  .form-container {
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  
-  .form-heading {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
-  
-  .input-field {
-    margin-bottom: 10px;
-    width: 100%;
-  }
-  
-  .button-container {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .signup-button {
-    background: linear-gradient(to right, #4caf50, #388e3c);
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-  }
-  
-  .signup-button:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .right-column {
-    flex: 1;
-    background: linear-gradient(to right, #4caf50, #388e3c);
-    color: #fff;
-    padding: 50px;
-  }
-  
-  .main-heading {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-  }
-  
-  .description {
-    font-size: 1rem;
-    line-height: 1.5;
-  }
-  
+}

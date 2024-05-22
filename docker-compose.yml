@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  backend:
+    image: node:20.9.0
+    container_name: backend
+    working_dir: /app
+    command: npm run server-dev
+    ports:
+      - "5000:5000"  # Changed to avoid conflict
+    volumes:
+      - ./server:/app
+    environment:
+      - DB_HOST=sql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=53037912Aa*
+      - DB_NAME=car_rental
+    depends_on:
+      - sql
+    networks:
+      - app-network
+
+  web:
+    image: node:20.9.0
+    container_name: web
+    working_dir: /src
+    command: npm start
+    ports:
+      - "3000:3000"  # Correct port for web service
+    volumes:
+      - ./client:/src
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  sql:
+    image: mysql:8.0
+    container_name: sql
+    environment:
+      MYSQL_ROOT_PASSWORD: 53037912Aa*
+      MYSQL_DATABASE: car_rental
+    ports:
+      - "3307:3306"  # Changed host port to avoid conflicts
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+
+volumes:
+  mysql-data:
+
+networks:
+  app-network:

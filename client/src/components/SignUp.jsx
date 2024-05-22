@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TEInput, TERipple } from "tw-elements-react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Cookies from 'js-cookie'; // Import Cookies to handle setting the authentication token
+import Cookies from 'js-cookie';
 
 export default function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -13,27 +13,21 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/BuyMeAll/signup', {
+      const response = await axios.post('http://localhost:5000/api/BuyMeAll/signup', {
         first_name: firstName,
         last_name: lastName,
         user_password: password,
         user_phOrEmail: email
       });
-      console.log(response);
       const { user_phOrEmail, first_name, tok } = response.data;
 
       if (user_phOrEmail && first_name && tok) {
-        Cookies.set('authToken', tok, { expires: 7 }); 
-        // Assuming you have a function or state handling for setUser
-        // setUser(response.data);
-        
+        Cookies.set('authToken', tok, { expires: 7 });
         setSuccessMessage('Registration successful');
         setErrorMessage('');
         alert("Sign up successful!");
-        // Assuming you have imported useNavigate from 'react-router-dom'
-        // navigate(`/`)
       } else {
         setSuccessMessage('');
         setErrorMessage('Registration failed. Please try again.');
@@ -90,7 +84,7 @@ export default function SignUp() {
               />
               <div className="button-container">
                 <TERipple rippleColor="light">
-                  <button type="submit" className="signup-button">
+                  <button type="submit" className="navbar__buttons__register">
                     Sign Up
                   </button>
                 </TERipple>
@@ -102,9 +96,7 @@ export default function SignUp() {
             <div className="description-container">
               <h4 className="main-heading">Why join us?</h4>
               <p className="description">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              Welcome to Car Rental, your premier destination for car rentals. Whether you're traveling for business, planning a family vacation, or need a temporary vehicle, we offer a wide range of rental cars to suit your needs. Our fleet includes everything from compact cars for city driving to spacious SUVs for family trips and luxury vehicles for special occasions
               </p>
             </div>
           </div>
